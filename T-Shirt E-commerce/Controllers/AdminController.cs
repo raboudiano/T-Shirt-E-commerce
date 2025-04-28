@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T_Shirt_E_commerce.Data;
 using T_Shirt_E_commerce.Models;
 
 namespace T_Shirt_E_commerce.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
