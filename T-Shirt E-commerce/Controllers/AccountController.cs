@@ -11,9 +11,7 @@ namespace T_Shirt_E_commerce.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,6 +35,7 @@ namespace T_Shirt_E_commerce.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
+                TempData["WelcomeMessage"] = "Welcome, " + vm.Username + "!";
                 return RedirectToAction("Index", "Admin");
             }
 
@@ -57,11 +56,13 @@ namespace T_Shirt_E_commerce.Controllers
         {
             if (!ModelState.IsValid) return View(vm);
 
-            var result = await _signInManager.PasswordSignInAsync(
-                vm.Username, vm.Password, vm.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(vm.Username, vm.Password, vm.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
+            {
+                TempData["WelcomeMessage"] = "Welcome back, " + vm.Username + "!";
                 return RedirectToAction("Index", "Admin");
+            }
 
             ModelState.AddModelError("", "Invalid login attempt.");
             return View(vm);

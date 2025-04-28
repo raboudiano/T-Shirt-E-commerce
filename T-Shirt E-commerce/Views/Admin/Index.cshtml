@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<T_Shirt_E_commerce.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<T_Shirt_E_commerce.Models.ApplicationUser> SignInManager
+@inject UserManager<T_Shirt_E_commerce.Models.ApplicationUser> UserManager
+
+
 
 @{
     Layout = "_Layout";    // or your admin layout
@@ -39,13 +44,10 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a asp-controller="Admin" asp-action="Index" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Home</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="~/Assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
+                    
                     <div class="ms-3">
                         <h6 class="mb-0">Raboudi Ibrahim</h6>
                         <span>Admin</span>
@@ -61,17 +63,7 @@
         <!-- Content Start -->
         <div class="content w-100">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="#" class="sidebar-toggler flex-shrink-0">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
-                <div class="navbar-nav align-items-center ms-auto">
-                    <!-- user menu etc. -->
-                </div>
-            </nav>
+          
             <!-- Navbar End -->
             <!-- Products Table Start -->
             <div class="container-fluid pt-4 px-4">

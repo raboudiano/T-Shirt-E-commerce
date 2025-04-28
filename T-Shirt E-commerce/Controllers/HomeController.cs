@@ -1,31 +1,31 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using T_Shirt_E_commerce.Models;
+using T_Shirt_E_commerce.Data;
+using System.Linq;
 
-namespace T_Shirt_E_commerce.Controllers;
-
-public class HomeController : Controller
+namespace T_Shirt_E_commerce.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly AppDbContext _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            var products = _context.Products.ToList();
+            return View(products);
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Details(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+                return NotFound();
+
+            return View(product);
+        }
     }
 }
