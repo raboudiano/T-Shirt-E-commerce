@@ -1,0 +1,20 @@
+﻿@model List<T_Shirt_E_commerce.Models.Product>
+
+
+
+
+
+
+
+
+<div style="display: flex; flex-wrap: wrap;">
+    @foreach (var product in Model)
+    {
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+            <img src="@product.ImageUrl" width="150" /><br />
+            <strong>@product.Name</strong><br />
+            $@product.Price<br />
+            <p>@product.Description</p>
+        </div>
+    }
+</div>

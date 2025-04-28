@@ -1,0 +1,166 @@
+﻿@model IEnumerable<T_Shirt_E_commerce.Models.Product>
+
+@{
+    Layout = "_Layout";    // or your admin layout
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link href="~/Assets/img/user.jpg" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/Assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/Assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a asp-controller="Admin" asp-action="Index" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="~/Assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Raboudi Ibrahim</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a asp-controller="Admin" asp-action="Index" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a asp-controller="Admin" asp-action="Create" class="nav-item nav-link"><i class="fa fa-plus me-2"></i>Add New T-Shirt</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+        <!-- Content Start -->
+        <div class="content w-100">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <!-- user menu etc. -->
+                </div>
+            </nav>
+            <!-- Navbar End -->
+            <!-- Products Table Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Available T-Shirts</h6>
+                        <a href="@Url.Action("Create","Admin")" class="btn btn-primary">Add New T-Shirt</a>
+
+                    </div>
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="bg-light rounded p-4">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover mb-0">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
+                                            <th>Image</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model)
+                                        {
+                                            <tr>
+                                                <td>@product.Name</td>
+                                                <td>@product.Price.ToString("C")</td>
+                                                <td>@product.Description</td>
+                                                <td>
+                                                    @if (!string.IsNullOrWhiteSpace(product.ImageUrl))
+                                                    {
+                                                        <img src="@product.ImageUrl" width="80" height="80" style="object-fit:cover;" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">No Image</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                                                    <form asp-action="Delete" asp-route-id="@product.Id" method="post" style="display:inline"
+                                                          onsubmit="return confirm('Delete this T-Shirt?');">
+                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+            <!-- Products Table End -->
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Gestion des Events</a>, All Right Reserved.
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            Designed By <a href="https://htmlcodex.com">HTML Codex</a><br />
+                            Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/lib/chart/chart.min.js"></script>
+    <script src="~/Assets/lib/easing/easing.min.js"></script>
+    <script src="~/Assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/Assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Assets/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="~/Assets/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/Assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/Assets/js/main.js"></script>
+</body>
+</html>
